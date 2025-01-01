@@ -1,0 +1,24 @@
+class Solution {
+    public int[][] imageSmoother(int[][] img) {
+        int m = img.length;
+        int n = img[0].length;
+        int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0},{-1,-1},{-1,1},{1,1},{1,-1}};
+        int[][] ans = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                int avg=0;
+                int cnt=0;
+                for(int[] dir:dirs){
+                    int ni = i+dir[1];
+                    int nj = j+dir[0];
+                    if(ni>=0&&ni<m&&nj>=0&&nj<n){
+                        avg+=img[ni][nj];
+                        cnt++;
+                    }
+                }
+                ans[i][j] = (avg+img[i][j])/(cnt+1);
+            }
+        }
+        return ans;
+    }
+}
