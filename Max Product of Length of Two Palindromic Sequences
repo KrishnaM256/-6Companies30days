@@ -1,0 +1,39 @@
+class Solution {
+    public int maxProduct(String s) {
+        int n = s.length();
+        char[] strArr = s.toCharArray();
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int mask=0;mask<(1<<n);mask++){
+            String subseq = "";
+            for(int i=0;i<n;i++){
+                if(((mask) & (1<<i))>0){
+                    subseq+=strArr[i];
+                }
+            }
+            if(isPal(subseq)){
+                map.put(mask,subseq.length());
+            }
+        }
+        int ans=0;
+        for(int mask1:map.keySet()){
+            for(int mask2:map.keySet()){
+                if((mask1&mask2)==0){
+                    ans = Math.max(ans,map.get(mask1)*map.get(mask2));
+                }
+            }
+        }
+        return ans; 
+    }
+    private boolean isPal(String s){
+        int n = s.length();
+        int i=0;
+        int j=n-1;
+        char[] sArr = s.toCharArray();
+        while(i<j){
+            if(sArr[i]!=sArr[j])return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
