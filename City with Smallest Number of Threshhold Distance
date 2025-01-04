@@ -1,0 +1,61 @@
+class Solution {
+    class Pair{
+        int dist;
+        int node;
+        public Pair(int d,int n){
+            dist = d;
+            node = n;
+        }
+    }
+
+
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int[][] distance = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                distance[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        List<List<Pair>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for (int i = 0; i < edges.length; i++) {
+            adj.get(edges[i][0]).add(new Pair(edges[i][2], edges[i][1]));
+            adj.get(edges[i][1]).add(new Pair(edges[i][2], edges[i][0]));
+        }
+        
+        for (int i = 0; i < n; i++) {
+            PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
+            distance[i][i] = 0;
+            pq.add(new Pair(0, i));
+            while (!pq.isEmpty()) {
+                Pair p = pq.remove();
+                int node = p.node;
+                int dist = p.dist;
+                for (Pair it : adj.get(node)) {
+                    int nnode = it.node;
+                    int ndist = it.dist + dist;
+                    if (distance[i][nnode] > ndist) {
+                        distance[i][nnode] = ndist;
+                        pq.add(new Pair(ndist, nnode));
+                    }
+                }
+            }
+        }
+        int min = Integer.MAX_VALUE,res=0;
+        for(int i=0;i<n;i++){
+            int temp = 0;
+            for(int j=0;j<n;j++){
+                if(distance[i][j]<=distanceThreshold){
+                    temp++;
+                }
+            }
+            if(min>=temp){
+                res = i;
+                min=temp;
+            }
+        }
+        return res;
+    }
+}
