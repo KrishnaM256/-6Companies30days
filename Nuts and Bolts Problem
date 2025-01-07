@@ -1,0 +1,61 @@
+
+class Solution {
+    void matchPairs(int n, char nuts[], char bolts[]) {
+        // code here
+        int[] arr = new int[9];
+        for(char c:nuts){
+            if(c=='!')arr[0]++;
+            if(c=='#')arr[1]++;
+            if(c=='$')arr[2]++;
+            if(c=='%')arr[3]++;
+            if(c=='&')arr[4]++;
+            if(c=='*')arr[5]++;
+            if(c=='?')arr[6]++;
+            if(c=='@')arr[7]++;
+            if(c=='^')arr[8]++;
+        }
+        int k=0;
+        for(int i=0;i<9;i++){
+            while(arr[i]>0){
+                if(i==0){
+                nuts[k]='!';
+                bolts[k]='!';  
+                }
+                if(i==1){
+                nuts[k]='#';
+                bolts[k]='#';  
+                }
+                if(i==2){
+                    nuts[k]='$';
+                    bolts[k]='$';
+                }
+                if(i==3){
+                nuts[k]='%';
+                    bolts[k]='%';
+                }
+                if(i==4){
+                nuts[k]='&';
+                bolts[k]='&';    
+                }
+                if(i==5){
+                nuts[k]='*';
+                bolts[k]='*';    
+                }
+                if(i==6){
+                nuts[k]='?';
+                bolts[k]='?';    
+                }
+                if(i==7){
+                nuts[k]='@';
+                bolts[k]='@';    
+                }
+                if(i==8){
+                nuts[k]='^';
+                bolts[k]='^';    
+                }
+                k++;
+                arr[i]--;
+            }
+        }
+    }
+}
