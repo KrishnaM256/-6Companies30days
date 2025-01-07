@@ -1,0 +1,30 @@
+
+class Solution {
+    // Function to find the maximum of each subarray of size k.
+    public ArrayList<Integer> max_of_subarrays(int arr[], int k) {
+        ArrayList<Integer> res = new ArrayList<>();
+        Deque<Integer> deque = new LinkedList<>(); // Stores indices of array elements
+
+        for (int i = 0; i < arr.length; i++) {
+            // Remove indices of elements not in the current window
+            if (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            // Remove indices of smaller elements (they won't be needed)
+            while (!deque.isEmpty() && arr[deque.peekLast()] <= arr[i]) {
+                deque.pollLast();
+            }
+
+            // Add current element's index
+            deque.offerLast(i);
+
+            // Add the maximum of the current window to the result
+            if (i >= k - 1) {
+                res.add(arr[deque.peekFirst()]);
+            }
+        }
+
+        return res;
+    }
+}
