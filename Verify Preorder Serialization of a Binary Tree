@@ -1,0 +1,26 @@
+class Solution {
+    class Pair{
+        String node;
+        int childs;
+        public Pair(String n,int c){
+            this.node = n;
+            this.childs = c;
+        }
+    }
+    public boolean isValidSerialization(String preorder) {
+        Stack<Pair> st = new Stack<>();
+        String[] ch = preorder.split(",");
+        if(ch.length==1&&ch[0].equals("#"))return true;
+        if(ch[0].equals("#"))return false;
+        st.push(new Pair(ch[0],0));
+        for(int i=1;i<ch.length;i++){
+            if(st.isEmpty())return false;
+            if(!ch[i].equals("#")){
+                st.push(new Pair(ch[i],0));
+            }
+            st.peek().childs++;
+            if(st.peek().childs==2)st.pop();
+        }
+        return st.isEmpty();
+    }
+}
